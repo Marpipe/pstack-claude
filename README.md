@@ -18,8 +18,8 @@
 >    git clone https://github.com/Marpipe/pstack-claude && cd pstack-claude
 >    git remote add upstream https://github.com/michael-denyer/pstack-claude
 >    git fetch upstream --tags
->    git merge --ff-only upstream/main     # this README note is the only local change; resolve it if it conflicts
->    git push origin main --tags
+>    git rebase upstream/main              # replays our one README commit on top of upstream
+>    git push --force-with-lease origin main && git push origin --tags
 >    ```
 >    (`gh repo sync Marpipe/pstack-claude` syncs `main` but not tags, so push the tags as above.)
 > 2. Pick the new tag (e.g. `v0.9.95`). Read the changes since our pinned tag:

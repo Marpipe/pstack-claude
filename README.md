@@ -2,6 +2,36 @@
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?logo=buy-me-a-coffee&logoColor=white)](https://buymeacoffee.com/codenyer)
 
+> ## Marpipe fork
+>
+> This is Marpipe's fork of [michael-denyer/pstack-claude](https://github.com/michael-denyer/pstack-claude).
+> Marpipe's code-root `.claude/settings.json` installs pstack from **this fork, pinned to a release tag**
+> (`extraKnownMarketplaces.pstack-claude`, `"ref": "vX.Y.Z"`, `"autoUpdate": false`). Nobody outside Marpipe
+> can change what the team runs, and a new version only arrives through a reviewed code-root PR.
+>
+> Don't commit pstack changes here. The fork stays an exact copy of upstream, and this note is the only difference.
+>
+> ### Updating to a newer upstream version
+>
+> 1. Sync the fork's branches and tags from upstream (tags are what we pin):
+>    ```shell
+>    git clone https://github.com/Marpipe/pstack-claude && cd pstack-claude
+>    git remote add upstream https://github.com/michael-denyer/pstack-claude
+>    git fetch upstream --tags
+>    git merge --ff-only upstream/main     # this README note is the only local change; resolve it if it conflicts
+>    git push origin main --tags
+>    ```
+>    (`gh repo sync Marpipe/pstack-claude` syncs `main` but not tags, so push the tags as above.)
+> 2. Pick the new tag (e.g. `v0.9.95`). Read the changes since our pinned tag:
+>    `git log --oneline vOLD..vNEW` and `git diff vOLD vNEW -- plugins/pstack`. Look for new hooks, scripts,
+>    network calls or permission changes. Those run on every teammate's machine.
+> 3. In code-root, on a task branch, change `"ref"` in `.claude/settings.json` to the new tag and open a draft PR
+>    with what changed and what you reviewed.
+> 4. After it merges, teammates run `/plugin marketplace update pstack-claude` and then reinstall or update the
+>    plugin, or restart Claude Code.
+>
+> In Claude Code, the code-root skill `pstack-update` walks through these steps.
+
 Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack) is an opinionated Cursor skill stack that improves agent outcomes. This is a port for Claude Code, Codex, Pi, GitHub Copilot and other agent harnesses. It tracks upstream and also carries named policy forks, each declared in [`tools/forks.json`](tools/forks.json).
 
 Tell `poteto-mode` your goal and it will invoke the correct workflow for the task. It keeps your code concise, simple and verified.
